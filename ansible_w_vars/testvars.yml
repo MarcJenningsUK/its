@@ -1,0 +1,13 @@
+---
+- name: Echo playbook
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - host.config
+
+  tasks:
+    - name: Echo inventory_hostname
+      ansible.builtin.debug:
+        msg:
+          - "This is running on host {{ item.name }} at ip {{ item.ip }}"
+      with_items: '{{ homelab_hosts }}'

@@ -1,0 +1,14 @@
+---
+- hosts: "nginx"
+  name: "Test the server setup from template"
+  become: true
+
+  tasks:
+    - name: Create config files on the server.
+      ansible.builtin.template:
+        src: 'template.j2'
+        dest: '/etc/nginx/sites-available/{{ item.name }}'
+        mode: '0644'
+      loop:
+        - { name: hass, address: 'http://192.168.3.2:8123' }
+        - { name: nodered, address: 'http://192.168.3.4' }
