@@ -6,8 +6,16 @@
     - host.config
 
   tasks:
-    - name: Echo inventory_hostname
+    - name: Set up nginx.
       ansible.builtin.debug:
         msg:
-          - "This is running on host {{ item.name }} at ip {{ item.ip }}"
+          - "This sets up nginx for {{ item.name }} at ip {{ item.ip }}"
       with_items: '{{ homelab_hosts }}'
+      when: item.nginx | default(false)
+
+    - name: Set up pihole.
+      ansible.builtin.debug:
+        msg:
+          - "This sets up pihole for {{ item.name }} at ip {{ item.ip }}"
+      with_items: '{{ homelab_hosts }}'
+      when: item.pihole | default(false)
