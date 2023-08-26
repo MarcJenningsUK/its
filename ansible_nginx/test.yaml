@@ -1,14 +1,18 @@
 ---
-- hosts: "nginx"
+- hosts: localhost
   name: "Test the server setup from template"
-  become: true
+#  become: true
+  vars_files:
+    - ../host.config
 
   tasks:
     - name: Create config files on the server.
       ansible.builtin.template:
         src: 'template.j2'
-        dest: '/etc/nginx/sites-available/{{ item.name }}'
+        dest: '/mnt/e/test/{{ item.name }}'
         mode: '0644'
-      loop:
-        - { name: hass, address: 'http://192.168.3.2:8123' }
-        - { name: nodered, address: 'http://192.168.3.4' }
+      with_items: '{{ homelab_hosts }}'
+      when: item.nginx | default(false)
+#      loop:
+#        - { name: hass, address: 'http://192.168.3.2:8123' }
+#        - { name: nodered, address: 'http://192.168.3.4' }

@@ -24,6 +24,6 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/marc-jennings.uk/privkey.pem;
 
     location / {
-        proxy_pass {{ item.address }};
+        proxy_pass {{ item.baseurl }};
     }
 }
