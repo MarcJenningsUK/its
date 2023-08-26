@@ -13,6 +13,3 @@
         mode: '0644'
       with_items: '{{ homelab_hosts }}'
       when: item.nginx | default(false)
-#      loop:
-#        - { name: hass, address: 'http://192.168.3.2:8123' }
-#        - { name: nodered, address: 'http://192.168.3.4' }
