@@ -19,3 +19,9 @@
           - "This sets up pihole for {{ item.name }} at ip {{ item.ip }}"
       with_items: '{{ homelab_hosts }}'
       when: item.pihole | default(false)
+
+    - name: Test packages.
+      ansible.builtin.debug:
+        msg: "Installing package {{ item.packages }}"
+      with_items: '{{ homelab_hosts }}'
+      when: item.packages is defined
